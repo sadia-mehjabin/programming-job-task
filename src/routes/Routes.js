@@ -30,7 +30,8 @@ const router = createBrowserRouter([
             },
             {
                 path: '/billingPage',
-                element: <BillingPage></BillingPage>
+                element: <BillingPage></BillingPage>,
+                loader: () => fetch('http://localhost:5000/billing-list')
             },
         ]
     }

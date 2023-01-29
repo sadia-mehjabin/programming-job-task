@@ -1,10 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { authContext } from '../context/AuthProvider';
+import useAccessToken from '../hooks/useAccessToken';
 
 const Register = () => {
-    const { register, formState: {errors}, handleSubmit } =     useForm();
+    const { register, formState: {errors}, handleSubmit, reset } =     useForm();
     const {createUser, updatedUser, load} = useContext(authContext)
     
     const [registerError, setRegisterError] = useState('')
@@ -18,22 +20,39 @@ const Register = () => {
 
     const handleregister = data => {
         setRegisterError('')
-        console.log(data)
         createUser(data.email, data.password)
         .then(result => {
             const user = result.user;
             const userInfo = {
                 displayName: data.name
             }
-            console.log(user)
-            // updatedUser(userInfo)
-            // .then(()=> {
-            //     // saveUser(data.name, data.email, data.role, data.password) 
-            //     console.log(user)
-            // })
-            // .catch(error => console.log(error)) 
+            updatedUser(userInfo)
+            .then(()=> {
+                saveUser(data.name, data.email, data.password) 
+            })
+            .catch(error => console.log(error)) 
         })
         .catch(error => setRegisterError(error))
+    }
+    
+    const saveUser = (name, email, password) => {
+        const user = {name, email, password};
+        fetch('http://localhost:5000/registration',{
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            if(data.acknowledged === true){
+                setCreatedEmail(email)
+                toast('user added successfully') 
+            }
+        })
+        reset()
     }
     
     return (

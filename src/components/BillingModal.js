@@ -1,4 +1,5 @@
 import React from 'react';
+import { toast } from 'react-toastify';
 
 const BillingModal = () => {
     const handleBillingModal = event => {
@@ -13,6 +14,20 @@ const BillingModal = () => {
             name, email, mobile, amount 
         }
         console.log(bill)
+        fetch('http://localhost:5000/add-billing',{
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(bill)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.acknowledged === true){
+                toast(' successfully')
+            }
+            // setCreateUserEmail(email)
+        })
         form.reset()
     }
     return (
