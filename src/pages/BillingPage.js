@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useLoaderData } from 'react-router-dom';
 import { authContext } from '../context/AuthProvider';
 import BillingModal from '../components/BillingModal';
+import { toast } from 'react-toastify';
 
 const BillingPage = () => {
   
@@ -12,7 +13,7 @@ const BillingPage = () => {
     // const {name, mobile, email, amount, _id } = billingData;
     // console.log(billingData)
 
-    const url = `https://programming-job-task-server.vercel.app/billing-list`
+    const url = `http://localhost:5000/billing-list`
 
     const { data: billingData = [], isLoading, refetch } = useQuery({
         queryKey: ['bill'],
@@ -23,15 +24,34 @@ const BillingPage = () => {
                 }
             });
             const data = await res.json()
-            console.log(data)
             return data;
         }
     })
     
+    const handleDelete = (id) => {
+      const agree = window.confirm('are you sure to delete?')
+
+      if(agree){
+          fetch(`http://localhost:5000/delete-billing/${id}`, {
+              method: 'DELETE',
+              headers: {
+                  authorization: `bearer ${localStorage.getItem('newAccessToken')}`
+              }
+          })
+          .then(res => res.json())
+          .then(data => {
+              console.log(data)
+              if(data.deletedCount > 0){
+              toast("deleted successfully")
+              refetch()
+              }
+          })
+      }
+  };
       // const { data: billingData = [], isLoading, refetch } = useQuery({
       //     queryKey: ['bill'],
       //     queryFn: async () => {
-      //         const res = await fetch('https://programming-job-task-server.vercel.app/billing-list');
+      //         const res = await fetch('http://localhost:5000/billing-list');
       //         const data = await res.json()
       //         return data;
       //     }
@@ -71,7 +91,7 @@ const BillingPage = () => {
                   <td>{billingRow.mobile}</td>
                   <td>{billingRow.amount}</td>
                   <td><button className='btn btn-sm btn-success'>Update</button></td>
-                  <td><button className='btn btn-sm btn-error'>Delete</button></td>
+                  <td><button className='btn btn-sm btn-error' onClick={() => handleDelete(billingRow._id)}>Delete</button></td>
                  
                 </tr>
               </>)

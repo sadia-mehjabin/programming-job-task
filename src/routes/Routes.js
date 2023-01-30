@@ -27,7 +27,7 @@ const router = createBrowserRouter([
             {
                 path: '/billingPage',
                 element: <PrivateRoute><BillingPage></BillingPage></PrivateRoute>,
-                loader: () => fetch('https://programming-job-task-server.vercel.app/billing-list')
+                loader: () => fetch('http://localhost:5000/billing-list')
             },
         ]
     }

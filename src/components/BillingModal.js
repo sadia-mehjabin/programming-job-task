@@ -18,7 +18,7 @@ const BillingModal = () => {
             name, email, mobile, amount 
         }
        
-        fetch('https://programming-job-task-server.vercel.app/add-billing',{
+        fetch('http://localhost:5000/add-billing',{
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -37,7 +37,7 @@ const BillingModal = () => {
         
     }
     
-    const url = `https://programming-job-task-server.vercel.app/billing-list`
+    const url = `http://localhost:5000/billing-list`
 
     const { data: billingData = [], isLoading, refetch } = useQuery({
         queryKey: ['bill'],
@@ -48,10 +48,11 @@ const BillingModal = () => {
                 }
             });
             const data = await res.json()
-            console.log(data)
             return data;
         }
     })
+
+    
     return (
         <>
             <input type="checkbox" id="billingModal" className="modal-toggle" />
