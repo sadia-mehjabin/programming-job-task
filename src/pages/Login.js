@@ -21,7 +21,8 @@ const Login = () => {
         .then(result => {
             const user = result.user;
             setLoginUserEmail(data.email)
-            toast('successfully Loged in')   
+            toast('successfully Loged in')
+            navigate(from, {replace:true})   
         })
         .catch(error => setLoginError(error.message))
     }

@@ -5,6 +5,7 @@ import BillingPage from "../pages/BillingPage";
 import Home from "../pages/home/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
     {
@@ -25,8 +26,8 @@ const router = createBrowserRouter([
             },
             {
                 path: '/billingPage',
-                element: <BillingPage></BillingPage>,
-                loader: () => fetch('https://programming-job-task-server.vercel.app/billing-list')
+                element: <PrivateRoute><BillingPage></BillingPage></PrivateRoute>,
+                // loader: () => fetch('https://programming-job-task-server.vercel.app/billing-list')
             },
         ]
     }
