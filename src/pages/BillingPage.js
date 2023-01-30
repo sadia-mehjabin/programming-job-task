@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useLoaderData } from 'react-router-dom';
 import { authContext } from '../context/AuthProvider';
+import BillingModal from '../components/BillingModal';
 
 const BillingPage = () => {
   
@@ -11,10 +12,10 @@ const BillingPage = () => {
     // const {name, mobile, email, amount, _id } = billingData;
     // console.log(billingData)
 
-    const url = `https://programming-job-task-server.vercel.app/billing-list?email=${user?.email}`
+    const url = `https://programming-job-task-server.vercel.app/billing-list`
 
     const { data: billingData = [], isLoading, refetch } = useQuery({
-        queryKey: ['bill', user?.email],
+        queryKey: ['bill'],
         queryFn: async () => {
             const res = await fetch(url, {
                 headers: {
@@ -26,11 +27,23 @@ const BillingPage = () => {
             return data;
         }
     })
+    
+      // const { data: billingData = [], isLoading, refetch } = useQuery({
+      //     queryKey: ['bill'],
+      //     queryFn: async () => {
+      //         const res = await fetch('https://programming-job-task-server.vercel.app/billing-list');
+      //         const data = await res.json()
+      //         return data;
+      //     }
+      // })
+      
+
     if(isLoading){
       return <div className="flex items-center justify-center ">
       <div className="w-16 h-16 border-b-2 border-gray-900 rounded-full animate-spin"></div>
       </div>
   }
+ 
   return (
     <div>
       <div className="overflow-x-auto">
@@ -64,7 +77,7 @@ const BillingPage = () => {
               </>)
             }
             
-
+            
           </tbody>
         </table>
       </div>

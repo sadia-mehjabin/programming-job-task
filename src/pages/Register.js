@@ -11,7 +11,7 @@ const Register = () => {
     
     const [registerError, setRegisterError] = useState('')
     const [createdEmail, setCreatedEmail] = useState('')
-    // const [token] = useAccessToken(createdEmail)
+    const [token] = useAccessToken(createdEmail)
     const navigate = useNavigate()
 
     // if(token){

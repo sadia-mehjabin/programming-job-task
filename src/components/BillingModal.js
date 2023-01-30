@@ -1,5 +1,9 @@
+
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { useQueryClient } from 'react-query';
 import { toast } from 'react-toastify';
+
 
 const BillingModal = () => {
     const handleBillingModal = event => {
@@ -13,7 +17,7 @@ const BillingModal = () => {
         const bill = {
             name, email, mobile, amount 
         }
-        console.log(bill)
+       
         fetch('https://programming-job-task-server.vercel.app/add-billing',{
             method: 'POST',
             headers: {
@@ -25,11 +29,29 @@ const BillingModal = () => {
         .then(data => {
             if(data.acknowledged === true){
                 toast('Bill added successfully')
+                refetch()
             }
         
         })
         form.reset()
+        
     }
+    
+    const url = `https://programming-job-task-server.vercel.app/billing-list`
+
+    const { data: billingData = [], isLoading, refetch } = useQuery({
+        queryKey: ['bill'],
+        queryFn: async () => {
+            const res = await fetch(url, {
+                headers: {
+                    authorization: `bearer ${localStorage.getItem('newAccessToken')}`
+                }
+            });
+            const data = await res.json()
+            console.log(data)
+            return data;
+        }
+    })
     return (
         <>
             <input type="checkbox" id="billingModal" className="modal-toggle" />
