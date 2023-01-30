@@ -4,7 +4,7 @@ const useAccessToken = email => {
     const [token, setToken] = useState('')
     useEffect(() => {
         if (email) {
-            fetch(`https://resell-your-furniture-server-side.vercel.app/jwt?email=${email}`)
+            fetch(`https://programming-job-task-server.vercel.app/jwt?email=${email}`)
                 .then(res => res.json())
                 .then(data => {
                     console.log(data)

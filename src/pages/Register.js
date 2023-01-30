@@ -37,7 +37,7 @@ const Register = () => {
     
     const saveUser = (name, email, password) => {
         const user = {name, email, password};
-        fetch('http://localhost:5000/registration',{
+        fetch('https://programming-job-task-server.vercel.app/registration',{
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

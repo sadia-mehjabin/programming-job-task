@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import BillingModal from '../../components/BillingModal';
+import { authContext } from '../../context/AuthProvider';
 
 const Header = () => {
+    const {user, logOut} = useContext(authContext)
+    const handleLogOut = () => {
+        logOut()
+        .then(() => {
+        })
+        .catch(err => console.log(err))
+      }
     return (
         <div>
             <div className="navbar bg-base-300">
@@ -28,7 +36,10 @@ const Header = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <Link className="btn" to={'/login'}>Login</Link>
+                    {
+                        user ? <button onClick={handleLogOut} className="btn">log out </button> : <Link className="btn" to={'/login'}>Login</Link>
+                    }
+                    
                 </div>
             </div>
             <BillingModal></BillingModal>

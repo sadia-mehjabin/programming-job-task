@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import BillingModal from "../components/BillingModal";
 import Main from "../layout/Main";
-import AddABill from "../pages/AddABill";
 import BillingPage from "../pages/BillingPage";
 import Home from "../pages/home/Home";
 import Login from "../pages/Login";
@@ -25,13 +24,9 @@ const router = createBrowserRouter([
                 element: <Register></Register>
             },
             {
-                path: '/addABill',
-                element: <AddABill></AddABill>
-            },
-            {
                 path: '/billingPage',
                 element: <BillingPage></BillingPage>,
-                loader: () => fetch('http://localhost:5000/billing-list')
+                loader: () => fetch('https://programming-job-task-server.vercel.app/billing-list')
             },
         ]
     }

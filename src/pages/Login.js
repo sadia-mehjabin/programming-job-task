@@ -2,6 +2,7 @@ import { GoogleAuthProvider } from 'firebase/auth';
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { authContext } from '../context/AuthProvider';
 
 const Login = () => {
@@ -20,7 +21,7 @@ const Login = () => {
         .then(result => {
             const user = result.user;
             setLoginUserEmail(data.email)
-            // toast('successfully Loged in')   
+            toast('successfully Loged in')   
         })
         .catch(error => setLoginError(error.message))
     }

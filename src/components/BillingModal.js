@@ -14,7 +14,7 @@ const BillingModal = () => {
             name, email, mobile, amount 
         }
         console.log(bill)
-        fetch('http://localhost:5000/add-billing',{
+        fetch('https://programming-job-task-server.vercel.app/add-billing',{
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -24,9 +24,9 @@ const BillingModal = () => {
         .then(res => res.json())
         .then(data => {
             if(data.acknowledged === true){
-                toast(' successfully')
+                toast('Bill added successfully')
             }
-            // setCreateUserEmail(email)
+        
         })
         form.reset()
     }
@@ -42,7 +42,6 @@ const BillingModal = () => {
                     <input type="text" name='mobile' placeholder="Mobile No" className="input input-bordered w-full max-w-xs m-2" />
                     <input type="text" name='amount' placeholder="Payable amount" className="input input-bordered w-full max-w-xs m-2" /> <br />
                     <button type='submit'><label htmlFor="billingModal" className="btn btn-sm absolute right-2 bottom-2">submit</label></button>
-                    {/* <label htmlFor="billingModal" className="btn btn-sm absolute right-2 bottom-2">submit</label> */}
                     </form>
                 </div>
             </div>
